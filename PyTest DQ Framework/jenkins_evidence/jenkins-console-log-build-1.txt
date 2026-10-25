@@ -1,0 +1,427 @@
+Started by user Mursel Sinan Ayaz
+Obtained PyTest DQ Framework/Jenkinsfile from git https://github.com/Sinanayaz/dqe-automation.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/pytest-dq-framework
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/Sinanayaz/dqe-automation.git
+ > git init /var/jenkins_home/workspace/pytest-dq-framework # timeout=10
+Fetching upstream changes from https://github.com/Sinanayaz/dqe-automation.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Sinanayaz/dqe-automation.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/Sinanayaz/dqe-automation.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 0d073c520bc6c348c5abcaebe18e4e8e9c3e95cb (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 0d073c520bc6c348c5abcaebe18e4e8e9c3e95cb # timeout=10
+Commit message: "steps 1 2 3 of PyTest DQ Framework homework"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $POSTGRES_SECRET or $POSTGRES_SECRET_PSW
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 20 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Install dependencies)
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/pytest-dq-framework/PyTest DQ Framework
+[Pipeline] {
+[Pipeline] sh
++ python3 -m venv .venv
++ . .venv/bin/activate
++ deactivate nondestructive
++ [ -n  ]
++ [ -n  ]
++ hash -r
++ [ -n  ]
++ unset VIRTUAL_ENV
++ unset VIRTUAL_ENV_PROMPT
++ [ ! nondestructive = nondestructive ]
++ uname
++ export VIRTUAL_ENV=/var/jenkins_home/workspace/pytest-dq-framework/PyTest DQ Framework/.venv
++ _OLD_VIRTUAL_PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ PATH=/var/jenkins_home/workspace/pytest-dq-framework/PyTest DQ Framework/.venv/bin:/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ export PATH
++ VIRTUAL_ENV_PROMPT=.venv
++ export VIRTUAL_ENV_PROMPT
++ [ -n  ]
++ [ -z  ]
++ _OLD_VIRTUAL_PS1=# 
++ PS1=(.venv) # 
++ export PS1
++ hash -r
++ pip install --upgrade pip
+Requirement already satisfied: pip in ./.venv/lib/python3.13/site-packages (25.1.1)
+Collecting pip
+  Downloading pip-26.2.2-py3-none-any.whl.metadata (4.6 kB)
+Downloading pip-26.2.2-py3-none-any.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 7.3 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 25.1.1
+    Uninstalling pip-25.1.1:
+      Successfully uninstalled pip-25.1.1
+Successfully installed pip-26.2.2
++ pip install -r requirements.txt
+Collecting psycopg2-binary~=2.9.10 (from -r requirements.txt (line 1))
+  Downloading psycopg2_binary-2.9.13-cp313-cp313-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (4.9 kB)
+Collecting pandas~=2.2.3 (from -r requirements.txt (line 2))
+  Using cached pandas-2.2.3-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (89 kB)
+Collecting pyarrow>=18 (from -r requirements.txt (line 3))
+  Downloading pyarrow-26.0.0-cp313-cp313-manylinux_2_28_aarch64.whl.metadata (3.0 kB)
+Collecting pytest~=8.4.0 (from -r requirements.txt (line 4))
+  Downloading pytest-8.4.2-py3-none-any.whl.metadata (7.7 kB)
+Collecting pytest-html~=4.1.1 (from -r requirements.txt (line 5))
+  Downloading pytest_html-4.1.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting numpy>=1.26.0 (from pandas~=2.2.3->-r requirements.txt (line 2))
+  Downloading numpy-2.5.4-cp313-cp313-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (6.6 kB)
+Collecting python-dateutil>=2.8.2 (from pandas~=2.2.3->-r requirements.txt (line 2))
+  Downloading python_dateutil-3.0.0-py2.py3-none-any.whl.metadata (8.2 kB)
+Collecting pytz>=2020.1 (from pandas~=2.2.3->-r requirements.txt (line 2))
+  Downloading pytz-2026.5-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas~=2.2.3->-r requirements.txt (line 2))
+  Downloading tzdata-2026.5-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting iniconfig>=1 (from pytest~=8.4.0->-r requirements.txt (line 4))
+  Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting packaging>=20 (from pytest~=8.4.0->-r requirements.txt (line 4))
+  Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pluggy<2,>=1.5 (from pytest~=8.4.0->-r requirements.txt (line 4))
+  Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+Collecting pygments>=2.7.2 (from pytest~=8.4.0->-r requirements.txt (line 4))
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting jinja2>=3.0.0 (from pytest-html~=4.1.1->-r requirements.txt (line 5))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting pytest-metadata>=2.0.0 (from pytest-html~=4.1.1->-r requirements.txt (line 5))
+  Downloading pytest_metadata-3.1.1-py3-none-any.whl.metadata (8.6 kB)
+Collecting MarkupSafe>=2.0 (from jinja2>=3.0.0->pytest-html~=4.1.1->-r requirements.txt (line 5))
+  Downloading markupsafe-3.0.4-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (2.7 kB)
+Collecting six>=1.6 (from python-dateutil>=2.8.2->pandas~=2.2.3->-r requirements.txt (line 2))
+  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Downloading psycopg2_binary-2.9.13-cp313-cp313-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (5.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.9/5.9 MB 19.9 MB/s  0:00:00
+Using cached pandas-2.2.3-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (15.2 MB)
+Downloading pytest-8.4.2-py3-none-any.whl (365 kB)
+Downloading pytest_html-4.1.1-py3-none-any.whl (23 kB)
+Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+Downloading pyarrow-26.0.0-cp313-cp313-manylinux_2_28_aarch64.whl (50.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.9/50.9 MB 30.6 MB/s  0:00:01
+Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading markupsafe-3.0.4-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (24 kB)
+Downloading numpy-2.5.4-cp313-cp313-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (15.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.7/15.7 MB 56.4 MB/s  0:00:00
+Using cached packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 75.3 MB/s  0:00:00
+Downloading pytest_metadata-3.1.1-py3-none-any.whl (11 kB)
+Downloading python_dateutil-3.0.0-py2.py3-none-any.whl (94 kB)
+Downloading pytz-2026.5-py2.py3-none-any.whl (506 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading tzdata-2026.5-py2.py3-none-any.whl (347 kB)
+Installing collected packages: pytz, tzdata, six, pygments, pyarrow, psycopg2-binary, pluggy, packaging, numpy, MarkupSafe, iniconfig, python-dateutil, pytest, jinja2, pytest-metadata, pandas, pytest-html
+
+Successfully installed MarkupSafe-3.0.4 iniconfig-2.3.1 jinja2-3.1.6 numpy-2.5.4 packaging-26.3 pandas-2.2.3 pluggy-1.7.0 psycopg2-binary-2.9.13 pyarrow-26.0.0 pygments-2.21.0 pytest-8.4.2 pytest-html-4.1.1 pytest-metadata-3.1.1 python-dateutil-3.0.0 pytz-2026.5 six-1.17.0 tzdata-2026.5
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run DQ tests)
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/pytest-dq-framework/PyTest DQ Framework
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ . .venv/bin/activate
++ deactivate nondestructive
++ [ -n  ]
++ [ -n  ]
++ hash -r
++ [ -n  ]
++ unset VIRTUAL_ENV
++ unset VIRTUAL_ENV_PROMPT
++ [ ! nondestructive = nondestructive ]
++ uname
++ export VIRTUAL_ENV=/var/jenkins_home/workspace/pytest-dq-framework/PyTest DQ Framework/.venv
++ _OLD_VIRTUAL_PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ PATH=/var/jenkins_home/workspace/pytest-dq-framework/PyTest DQ Framework/.venv/bin:/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ export PATH
++ VIRTUAL_ENV_PROMPT=.venv
++ export VIRTUAL_ENV_PROMPT
++ [ -n  ]
++ [ -z  ]
++ _OLD_VIRTUAL_PS1=# 
++ PS1=(.venv) # 
++ export PS1
++ hash -r
++ mkdir -p html_report
++ pytest tests -m parquet_data --db_host=postgres --db_port=5432 --db_name=mydatabase --db_user=myuser --db_password=**** --parquet_root=/parquet_data --html=html_report/report.html --self-contained-html
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-8.4.2, pluggy-1.7.0
+rootdir: /var/jenkins_home/workspace/pytest-dq-framework/PyTest DQ Framework/tests
+configfile: pytest.ini
+plugins: metadata-3.1.1, html-4.1.1
+collected 17 items / 2 deselected / 15 selected
+
+tests/dq checks/parquet_files/test_facility_name_min_time_spent_per_visit_date.py . [  6%]
+FFF.                                                                     [ 33%]
+tests/dq checks/parquet_files/test_facility_type_avg_time_spent_per_visit_date.py . [ 40%]
+FF..                                                                     [ 66%]
+tests/dq checks/parquet_files/test_patient_sum_treatment_cost_per_facility_type.py . [ 73%]
+FF.F                                                                     [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_check_data_completeness _________________________
+tests/dq checks/parquet_files/test_facility_name_min_time_spent_per_visit_date.py:42: in test_check_data_completeness
+    data_quality_library.check_data_completeness(source_data, target_data)
+src/data_quality/data_quality_validation_library.py:112: in check_data_completeness
+    assert only_expected.empty and only_actual.empty, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Completeness check failed on columns ['facility_name', 'visit_date', 'min_time_spent']: 0 expected row(s) missing in actual, 8894 actual row(s) not present in expected.
+E   Missing in actual (sample):
+E   Empty DataFrame
+E   Columns: [facility_name, visit_date, min_time_spent]
+E   Index: []
+E   Unexpected in actual (sample):
+E        facility_name visit_date  min_time_spent
+E   8831     Perry LLC 2000-01-01            25.0
+E   8833     Perry LLC 2000-01-02            31.0
+E   8835     Perry LLC 2000-01-03            34.0
+E   8837     Perry LLC 2000-01-04            40.0
+E   8839     Perry LLC 2000-01-05            32.0
+E   8841     Perry LLC 2000-01-06            20.0
+E   8843     Perry LLC 2000-01-07            22.0
+E   8845     Perry LLC 2000-01-08            20.0
+E   8847     Perry LLC 2000-01-09            22.0
+E   8849     Perry LLC 2000-01-10            58.0
+_______________________________ test_check_count _______________________________
+tests/dq checks/parquet_files/test_facility_name_min_time_spent_per_visit_date.py:48: in test_check_count
+    data_quality_library.check_count(source_data, target_data)
+src/data_quality/data_quality_validation_library.py:79: in check_count
+    assert diff == 0, (
+           ^^^^^^^^^
+E   AssertionError: Count check failed: expected 35557 rows, actual 44451 rows (expected - actual = -8894).
+____________________________ test_check_uniqueness _____________________________
+tests/dq checks/parquet_files/test_facility_name_min_time_spent_per_visit_date.py:54: in test_check_uniqueness
+    data_quality_library.check_duplicates(target_data)
+src/data_quality/data_quality_validation_library.py:70: in check_duplicates
+    assert duplicated.empty, (
+           ^^^^^^^^^^^^^^^^
+E   AssertionError: Duplicate check failed on columns ['facility_name', 'visit_date', 'min_time_spent', 'partition_date']: 17788 rows belong to duplicate groups. Sample:
+E      facility_name visit_date  min_time_spent partition_date
+E   8      Perry LLC 2000-01-03              34        2000-01
+E   10     Perry LLC 2000-01-06              20        2000-01
+E   14     Perry LLC 2000-01-12              15        2000-01
+E   17     Perry LLC 2000-01-15              24        2000-01
+E   18     Perry LLC 2000-01-29              35        2000-01
+E   25     Perry LLC 2000-01-10              58        2000-01
+E   26     Perry LLC 2000-01-23              32        2000-01
+E   27     Perry LLC 2000-01-16              34        2000-01
+E   30     Perry LLC 2000-01-26              16        2000-01
+E   31     Perry LLC 2000-01-28              23        2000-01
+_________________________ test_check_data_completeness _________________________
+tests/dq checks/parquet_files/test_facility_type_avg_time_spent_per_visit_date.py:42: in test_check_data_completeness
+    data_quality_library.check_data_completeness(source_data, target_data)
+src/data_quality/data_quality_validation_library.py:112: in check_data_completeness
+    assert only_expected.empty and only_actual.empty, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Completeness check failed on columns ['facility_type', 'visit_date', 'avg_time_spent']: 9775 expected row(s) missing in actual, 0 actual row(s) not present in expected.
+E   Missing in actual (sample):
+E     facility_type visit_date  avg_time_spent
+E   0        Clinic 2000-01-01            25.0
+E   1        Clinic 2000-01-02            32.5
+E   2        Clinic 2000-01-03            37.0
+E   3        Clinic 2000-01-04            43.0
+E   4        Clinic 2000-01-05            46.0
+E   5        Clinic 2000-01-06            34.0
+E   6        Clinic 2000-01-07            36.0
+E   7        Clinic 2000-01-08            22.5
+E   8        Clinic 2000-01-09            36.5
+E   9        Clinic 2000-01-10            58.5
+E   Unexpected in actual (sample):
+E   Empty DataFrame
+E   Columns: [facility_type, visit_date, avg_time_spent]
+E   Index: []
+_______________________________ test_check_count _______________________________
+tests/dq checks/parquet_files/test_facility_type_avg_time_spent_per_visit_date.py:48: in test_check_count
+    data_quality_library.check_count(source_data, target_data)
+src/data_quality/data_quality_validation_library.py:79: in check_count
+    assert diff == 0, (
+           ^^^^^^^^^
+E   AssertionError: Count check failed: expected 35557 rows, actual 25782 rows (expected - actual = 9775).
+_________________________ test_check_data_completeness _________________________
+tests/dq checks/parquet_files/test_patient_sum_treatment_cost_per_facility_type.py:43: in test_check_data_completeness
+    data_quality_library.check_data_completeness(source_data, target_data)
+src/data_quality/data_quality_validation_library.py:112: in check_data_completeness
+    assert only_expected.empty and only_actual.empty, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Completeness check failed on columns ['facility_type', 'full_name', 'sum_treatment_cost']: 75 expected row(s) missing in actual, 19 actual row(s) not present in expected.
+E   Missing in actual (sample):
+E      facility_type           full_name  sum_treatment_cost
+E   1         Clinic   Alyssa Washington          1697782.17
+E   3         Clinic            Amy Long          1632838.38
+E   4         Clinic        Angela Lewis          1769260.09
+E   5         Clinic      Anne Nicholson          1680057.86
+E   7         Clinic     Courtney Bailey          1633945.00
+E   8         Clinic  Courtney Valentine          1632409.45
+E   9         Clinic         Dawn Murray          1822773.39
+E   11        Clinic          Debra Hunt          1719008.01
+E   12        Clinic       Gina Galloway          1721873.73
+E   14        Clinic      Jessica Harvey          1866309.36
+E   Unexpected in actual (sample):
+E      facility_type          full_name  sum_treatment_cost
+E   0         Clinic  Alyssa Washington         -1697782.17
+E   2         Clinic           Amy Long         -1632838.38
+E   6         Clinic    Courtney Bailey         -1633945.00
+E   10        Clinic         Debra Hunt         -1719008.01
+E   13        Clinic     Jessica Harvey         -1866309.36
+E   16        Clinic       Joseph Estes         -1807405.08
+E   21        Clinic       Megan Vargas         -1721634.55
+E   23        Clinic       Michael Park         -1720956.72
+E   26        Clinic    Mitchell Foster         -1606762.02
+E   29        Clinic    Robert Johnston         -1750531.91
+_______________________________ test_check_count _______________________________
+tests/dq checks/parquet_files/test_patient_sum_treatment_cost_per_facility_type.py:49: in test_check_count
+    data_quality_library.check_count(source_data, target_data)
+src/data_quality/data_quality_validation_library.py:79: in check_count
+    assert diff == 0, (
+           ^^^^^^^^^
+E   AssertionError: Count check failed: expected 120 rows, actual 64 rows (expected - actual = 56).
+__________________________ test_check_not_null_values __________________________
+tests/dq checks/parquet_files/test_patient_sum_treatment_cost_per_facility_type.py:61: in test_check_not_null_values
+    data_quality_library.check_not_null_values(target_data, ['facility_type', 'full_name', 'sum_treatment_cost'])
+src/data_quality/data_quality_validation_library.py:133: in check_not_null_values
+    assert failing.empty, f"Not-null check failed. NULL counts per column: {failing.to_dict()}"
+           ^^^^^^^^^^^^^
+E   AssertionError: Not-null check failed. NULL counts per column: {'full_name': 4}
+- Generated html report: file:///var/jenkins_home/workspace/pytest-dq-framework/PyTest%20DQ%20Framework/html_report/report.html -
+=========================== short test summary info ============================
+FAILED tests/dq checks/parquet_files/test_facility_name_min_time_spent_per_visit_date.py::test_check_data_completeness - AssertionError: Completeness check failed on columns ['facility_name', 'visit_date', 'min_time_spent']: 0 expected row(s) missing in actual, 8894 actual row(s) not present in expected.
+Missing in actual (sample):
+Empty DataFrame
+Columns: [facility_name, visit_date, min_time_spent]
+Index: []
+Unexpected in actual (sample):
+     facility_name visit_date  min_time_spent
+8831     Perry LLC 2000-01-01            25.0
+8833     Perry LLC 2000-01-02            31.0
+8835     Perry LLC 2000-01-03            34.0
+8837     Perry LLC 2000-01-04            40.0
+8839     Perry LLC 2000-01-05            32.0
+8841     Perry LLC 2000-01-06            20.0
+8843     Perry LLC 2000-01-07            22.0
+8845     Perry LLC 2000-01-08            20.0
+8847     Perry LLC 2000-01-09            22.0
+8849     Perry LLC 2000-01-10            58.0
+FAILED tests/dq checks/parquet_files/test_facility_name_min_time_spent_per_visit_date.py::test_check_count - AssertionError: Count check failed: expected 35557 rows, actual 44451 rows (expected - actual = -8894).
+FAILED tests/dq checks/parquet_files/test_facility_name_min_time_spent_per_visit_date.py::test_check_uniqueness - AssertionError: Duplicate check failed on columns ['facility_name', 'visit_date', 'min_time_spent', 'partition_date']: 17788 rows belong to duplicate groups. Sample:
+   facility_name visit_date  min_time_spent partition_date
+8      Perry LLC 2000-01-03              34        2000-01
+10     Perry LLC 2000-01-06              20        2000-01
+14     Perry LLC 2000-01-12              15        2000-01
+17     Perry LLC 2000-01-15              24        2000-01
+18     Perry LLC 2000-01-29              35        2000-01
+25     Perry LLC 2000-01-10              58        2000-01
+26     Perry LLC 2000-01-23              32        2000-01
+27     Perry LLC 2000-01-16              34        2000-01
+30     Perry LLC 2000-01-26              16        2000-01
+31     Perry LLC 2000-01-28              23        2000-01
+FAILED tests/dq checks/parquet_files/test_facility_type_avg_time_spent_per_visit_date.py::test_check_data_completeness - AssertionError: Completeness check failed on columns ['facility_type', 'visit_date', 'avg_time_spent']: 9775 expected row(s) missing in actual, 0 actual row(s) not present in expected.
+Missing in actual (sample):
+  facility_type visit_date  avg_time_spent
+0        Clinic 2000-01-01            25.0
+1        Clinic 2000-01-02            32.5
+2        Clinic 2000-01-03            37.0
+3        Clinic 2000-01-04            43.0
+4        Clinic 2000-01-05            46.0
+5        Clinic 2000-01-06            34.0
+6        Clinic 2000-01-07            36.0
+7        Clinic 2000-01-08            22.5
+8        Clinic 2000-01-09            36.5
+9        Clinic 2000-01-10            58.5
+Unexpected in actual (sample):
+Empty DataFrame
+Columns: [facility_type, visit_date, avg_time_spent]
+Index: []
+FAILED tests/dq checks/parquet_files/test_facility_type_avg_time_spent_per_visit_date.py::test_check_count - AssertionError: Count check failed: expected 35557 rows, actual 25782 rows (expected - actual = 9775).
+FAILED tests/dq checks/parquet_files/test_patient_sum_treatment_cost_per_facility_type.py::test_check_data_completeness - AssertionError: Completeness check failed on columns ['facility_type', 'full_name', 'sum_treatment_cost']: 75 expected row(s) missing in actual, 19 actual row(s) not present in expected.
+Missing in actual (sample):
+   facility_type           full_name  sum_treatment_cost
+1         Clinic   Alyssa Washington          1697782.17
+3         Clinic            Amy Long          1632838.38
+4         Clinic        Angela Lewis          1769260.09
+5         Clinic      Anne Nicholson          1680057.86
+7         Clinic     Courtney Bailey          1633945.00
+8         Clinic  Courtney Valentine          1632409.45
+9         Clinic         Dawn Murray          1822773.39
+11        Clinic          Debra Hunt          1719008.01
+12        Clinic       Gina Galloway          1721873.73
+14        Clinic      Jessica Harvey          1866309.36
+Unexpected in actual (sample):
+   facility_type          full_name  sum_treatment_cost
+0         Clinic  Alyssa Washington         -1697782.17
+2         Clinic           Amy Long         -1632838.38
+6         Clinic    Courtney Bailey         -1633945.00
+10        Clinic         Debra Hunt         -1719008.01
+13        Clinic     Jessica Harvey         -1866309.36
+16        Clinic       Joseph Estes         -1807405.08
+21        Clinic       Megan Vargas         -1721634.55
+23        Clinic       Michael Park         -1720956.72
+26        Clinic    Mitchell Foster         -1606762.02
+29        Clinic    Robert Johnston         -1750531.91
+FAILED tests/dq checks/parquet_files/test_patient_sum_treatment_cost_per_facility_type.py::test_check_count - AssertionError: Count check failed: expected 120 rows, actual 64 rows (expected - actual = 56).
+FAILED tests/dq checks/parquet_files/test_patient_sum_treatment_cost_per_facility_type.py::test_check_not_null_values - AssertionError: Not-null check failed. NULL counts per column: {'full_name': 4}
+================== 8 failed, 7 passed, 2 deselected in 0.38s ===================
+[Pipeline] catchError
+[Pipeline] {
+[Pipeline] error
+[Pipeline] }
+ERROR: Some data quality checks failed - see the HTML report.
+[Pipeline] // catchError
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] publishHTML
+[htmlpublisher] Archiving HTML reports...
+[htmlpublisher] Archiving at BUILD level /var/jenkins_home/workspace/pytest-dq-framework/PyTest DQ Framework/html_report to HTML_20Test_20Report
+[htmlpublisher] Copying recursive using current thread
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+
