@@ -1,0 +1,77 @@
+pipeline {
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 20, unit: 'MINUTES')
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
+    environment {
+        FRAMEWORK_DIR  = 'PyTest DQ Framework'
+        DB_HOST        = 'postgres'
+        DB_PORT        = '5432'
+        DB_NAME        = 'mydatabase'
+        PARQUET_ROOT   = '/parquet_data'
+        POSTGRES_SECRET = credentials('jenkins-postgres-credentials')
+    }
+
+    stages {
+        stage('Install dependencies') {
+            steps {
+                dir("${env.FRAMEWORK_DIR}") {
+                    sh '''
+                        python3 -m venv .venv
+                        . .venv/bin/activate
+                        pip install --upgrade pip
+                        pip install -r requirements.txt
+                    '''
+                }
+            }
+        }
+
+        stage('Run DQ tests') {
+            steps {
+                dir("${env.FRAMEWORK_DIR}") {
+                    script {
+                        int rc = sh(returnStatus: true, script: '''
+                            . .venv/bin/activate
+                            mkdir -p html_report
+                            pytest tests -m "parquet_data" \
+                                --db_host="$DB_HOST" \
+                                --db_port="$DB_PORT" \
+                                --db_name="$DB_NAME" \
+                                --db_user="$POSTGRES_SECRET_USR" \
+                                --db_password="$POSTGRES_SECRET_PSW" \
+                                --parquet_root="$PARQUET_ROOT" \
+                                --html=html_report/report.html --self-contained-html
+                        ''')
+                        if (rc == 1) {
+                            // Failed DQ checks are results, not a broken pipeline:
+                            // stage goes red, build stays green (TAS section 9).
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                error('Some data quality checks failed - see the HTML report.')
+                            }
+                        } else if (rc != 0) {
+                            error("pytest exited with code ${rc} (pipeline/config problem, not a DQ result).")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: "${env.FRAMEWORK_DIR}/html_report/**", allowEmptyArchive: true
+            publishHTML(target: [
+                reportDir: "${env.FRAMEWORK_DIR}/html_report",
+                reportFiles: 'report.html',
+                reportName: 'HTML Test Report',
+                keepAll: true,
+                alwaysLinkToLastBuild: true,
+                allowMissing: true
+            ])
+        }
+    }
+}
