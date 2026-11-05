@@ -1,1 +1,14 @@
-results
+
+results/
+
+parquet_data/
+generated_report/
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+.idea/
+.vscode/
+selenium-screenshot-*.png

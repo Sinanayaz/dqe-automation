@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.5.1 (Python 3.15.0 on darwin)" generated="2026-11-05T16:17:10.440061" rpa="false" schemaversion="5">
+<suite id="s1" name="Test" source="/Users/murselsinan_ayaz/dqe-automation/Robot Framework/test.robot">
+<test id="s1-t1" name="HTML Report Table Should Match Parquet Dataset" line="19">
+<kw name="Path To File Url" owner="helper">
+<msg time="2026-11-05T16:17:11.017558" level="INFO">${report_url} = file:///Users/murselsinan_ayaz/dqe-automation/Robot%20Framework/generated_report/report.html</msg>
+<var>${report_url}</var>
+<arg>${REPORT_FILE}</arg>
+<status status="PASS" start="2026-11-05T16:17:11.017360" elapsed="0.000217"/>
+</kw>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-11-05T16:17:11.017866" level="INFO">Opening browser 'chrome' to base url 'file:///Users/murselsinan_ayaz/dqe-automation/Robot%20Framework/generated_report/report.html'.</msg>
+<arg>${report_url}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-11-05T16:17:11.017745" elapsed="1.989248"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${TABLE_LOCATOR}</arg>
+<arg>timeout=15s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-11-05T16:17:13.007434" elapsed="0.007585"/>
+</kw>
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<msg time="2026-11-05T16:17:13.017649" level="INFO">${table} = &lt;selenium.webdriver.remote.webelement.WebElement (session="8d192ecd9d2412875771e2ef16e6b475", element="f.9B4C1CE41AFA28521F31E09E16EA0695.d.DFD981FB46FAB8A7478774E7159AF8D3.e.2")&gt;</msg>
+<var>${table}</var>
+<arg>${TABLE_LOCATOR}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2026-11-05T16:17:13.015221" elapsed="0.002458"/>
+</kw>
+<kw name="Read Html Table" owner="helper">
+<msg time="2026-11-05T16:17:13.249511" level="INFO">Report table loaded: 20 rows x 3 columns</msg>
+<msg time="2026-11-05T16:17:13.254387" level="INFO">       Facility Type  Visit Date Average Time Spent
+0   Specialty Center  2026-10-01                 29
+1           Hospital  2026-10-01              48.67
+2             Clinic  2026-10-01                 42
+3   Specialty Center  2026-09-30                 28
+4           Hospital  2026-09-30              45.75
+5             Clinic  2026-09-30               32.5
+6   Specialty Center  2026-09-29              31.25
+7           Hospital  2026-09-29                 29
+8             Clinic  2026-09-29               33.5
+9   Specialty Center  2026-09-28                 58
+10          Hospital  2026-09-28                 38
+11            Clinic  2026-09-28                 31
+12  Specialty Center  2026-09-27              42.67
+13          Hospital  2026-09-27              42.33
+14            Clinic  2026-09-27                 41
+15          Hospital  2026-09-26              47.67
+16            Clinic  2026-09-26                 42
+17  Specialty Center  2026-09-25              40.25
+18          Hospital  2026-09-25              46.75
+19            Clinic  2026-09-25               34.5</msg>
+<msg time="2026-11-05T16:17:13.254842" level="INFO">${html_df} =        Facility Type  Visit Date Average Time Spent
+0   Specialty Center  2026-10-01                 29
+1           Hospital  2026-10-01              48.67
+2             Clinic  2026-10-01            ...</msg>
+<var>${html_df}</var>
+<arg>${table}</arg>
+<status status="PASS" start="2026-11-05T16:17:13.017782" elapsed="0.237077"/>
+</kw>
+<kw name="Read Parquet Dataset" owner="helper">
+<msg time="2026-11-05T16:17:13.370240" level="INFO">Parquet loaded: 23 rows x 3 columns</msg>
+<msg time="2026-11-05T16:17:13.370917" level="INFO">       Facility Type Visit Date  Average Time Spent
+0   Specialty Center 2026-10-01               29.00
+1           Hospital 2026-10-01               48.67
+2             Clinic 2026-10-01               42.00
+3   Specialty Center 2026-09-30               28.00
+4           Hospital 2026-09-30               45.75
+5             Clinic 2026-09-30               32.50
+6   Specialty Center 2026-09-29               31.25
+7           Hospital 2026-09-29               29.00
+8             Clinic 2026-09-29               33.50
+9   Specialty Center 2026-09-28               58.00
+10          Hospital 2026-09-28               38.00
+11            Clinic 2026-09-28               31.00
+12  Specialty Center 2026-09-27               42.67
+13          Hospital 2026-09-27               42.33
+14            Clinic 2026-09-27               41.00
+15          Hospital 2026-09-26               47.67
+16            Clinic 2026-09-26               42.00
+17  Specialty Center 2026-09-25               40.25
+18          Hospital 2026-09-25               46.75
+19            Clinic 2026-09-25               34.50
+20  Specialty Center 2026-09-24               40.50
+21          Hospital 2026-09-24               31.67
+22            Clinic 2026-09-24               27.00</msg>
+<msg time="2026-11-05T16:17:13.371288" level="INFO">${parquet_df} =        Facility Type Visit Date  Average Time Spent
+0   Specialty Center 2026-10-01               29.00
+1           Hospital 2026-10-01               48.67
+2             Clinic 2026-10-01             ...</msg>
+<var>${parquet_df}</var>
+<arg>${PARQUET_FOLDER}</arg>
+<arg>filter_date=${FILTER_DATE}</arg>
+<arg>date_column=${DATE_COLUMN}</arg>
+<arg>sort_columns=${SORT_COLUMNS}</arg>
+<arg>drop_columns=${DROP_COLUMNS}</arg>
+<arg>column_map=${COLUMN_MAP}</arg>
+<status status="PASS" start="2026-11-05T16:17:13.254984" elapsed="0.116319"/>
+</kw>
+<kw name="Compare Dataframes" owner="helper">
+<msg time="2026-11-05T16:17:13.372895" level="INFO">${differences} = ['Row count differs: HTML=20, Parquet=23', "Row 21 exists only in Parquet: ['Specialty Center', '2026-09-24', '40.5']", "Row 22 exists only in Parquet: ['Hospital', '2026-09-24', '31.67']", "Row 23 ex...</msg>
+<var>${differences}</var>
+<arg>${html_df}</arg>
+<arg>${parquet_df}</arg>
+<arg>ignore_row_order=${IGNORE_ROW_ORDER}</arg>
+<status status="PASS" start="2026-11-05T16:17:13.371421" elapsed="0.001487"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-11-05T16:17:13.373217" level="INFO">Length is 4.</msg>
+<msg time="2026-11-05T16:17:13.373248" level="INFO">${count} = 4</msg>
+<var>${count}</var>
+<arg>${differences}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-11-05T16:17:13.372990" elapsed="0.000268"/>
+</kw>
+<if>
+<branch type="IF" condition="${count} &gt; 0">
+<kw name="Catenate" owner="BuiltIn">
+<msg time="2026-11-05T16:17:13.373582" level="INFO">${details} = Row count differs: HTML=20, Parquet=23
+Row 21 exists only in Parquet: ['Specialty Center', '2026-09-24', '40.5']
+Row 22 exists only in Parquet: ['Hospital', '2026-09-24', '31.67']
+Row 23 exists only i...</msg>
+<var>${details}</var>
+<arg>SEPARATOR=\n</arg>
+<arg>@{differences}</arg>
+<doc>Concatenates the given items together and returns the resulted string.</doc>
+<status status="PASS" start="2026-11-05T16:17:13.373452" elapsed="0.000141"/>
+</kw>
+<kw name="Fail" owner="BuiltIn">
+<msg time="2026-11-05T16:17:13.373790" level="FAIL">Data mismatch found:
+Row count differs: HTML=20, Parquet=23
+Row 21 exists only in Parquet: ['Specialty Center', '2026-09-24', '40.5']
+Row 22 exists only in Parquet: ['Hospital', '2026-09-24', '31.67']
+Row 23 exists only in Parquet: ['Clinic', '2026-09-24', '27']</msg>
+<arg>Data mismatch found:\n${details}</arg>
+<doc>Fails the test or task with the given message and optionally alters its tags.</doc>
+<status status="FAIL" start="2026-11-05T16:17:13.373642" elapsed="0.006321">Data mismatch found:
+Row count differs: HTML=20, Parquet=23
+Row 21 exists only in Parquet: ['Specialty Center', '2026-09-24', '40.5']
+Row 22 exists only in Parquet: ['Hospital', '2026-09-24', '31.67']
+Row 23 exists only in Parquet: ['Clinic', '2026-09-24', '27']</status>
+</kw>
+<status status="FAIL" start="2026-11-05T16:17:13.373335" elapsed="0.006690">Data mismatch found:
+Row count differs: HTML=20, Parquet=23
+Row 21 exists only in Parquet: ['Specialty Center', '2026-09-24', '40.5']
+Row 22 exists only in Parquet: ['Hospital', '2026-09-24', '31.67']
+Row 23 exists only in Parquet: ['Clinic', '2026-09-24', '27']</status>
+</branch>
+<status status="FAIL" start="2026-11-05T16:17:13.373316" elapsed="0.006746">Data mismatch found:
+Row count differs: HTML=20, Parquet=23
+Row 21 exists only in Parquet: ['Specialty Center', '2026-09-24', '40.5']
+Row 22 exists only in Parquet: ['Hospital', '2026-09-24', '31.67']
+Row 23 exists only in Parquet: ['Clinic', '2026-09-24', '27']</status>
+</if>
+<kw name="Log" owner="BuiltIn">
+<arg>HTML table and Parquet data match exactly.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2026-11-05T16:17:13.380188" elapsed="0.000013"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-11-05T16:17:13.380340" elapsed="0.074689"/>
+</kw>
+<doc>Reads the report table and the Parquet data, then compares them.</doc>
+<tag>data-quality</tag>
+<tag>report</tag>
+<status status="FAIL" start="2026-11-05T16:17:11.016583" elapsed="2.438540">Data mismatch found:
+Row count differs: HTML=20, Parquet=23
+Row 21 exists only in Parquet: ['Specialty Center', '2026-09-24', '40.5']
+Row 22 exists only in Parquet: ['Hospital', '2026-09-24', '31.67']
+Row 23 exists only in Parquet: ['Clinic', '2026-09-24', '27']</status>
+</test>
+<doc>Validates that the table in report.html matches the Parquet dataset.</doc>
+<status status="FAIL" start="2026-11-05T16:17:10.440522" elapsed="3.014874"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">data-quality</stat>
+<stat pass="0" fail="1" skip="0">report</stat>
+</tag>
+<suite>
+<stat name="Test" id="s1" pass="0" fail="1" skip="0">Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
