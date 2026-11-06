@@ -1,8 +1,8 @@
 import pytest
 
-def test_file_not_empty(csv_path):
+def test_file_not_empty(csv_path, read_csv):
     assert csv_path.exists(), f"File not found in {csv_path}"
-    assert csv_path.stat().st_size > 0, f"File at:{csv_path} is empty"
+    assert not read_csv.empty, "CSV has no data rows"
 
 @pytest.mark.validate_csv
 @pytest.mark.xfail(reason="Expected to contain duplicates.")
@@ -25,7 +25,7 @@ def test_age_column_valid(read_csv):
 @pytest.mark.validate_csv
 def test_email_column_valid(read_csv):
     emails = read_csv["email"]
-    is_valid = emails.str.contains("@") & emails.str.endswith(".com")
+    is_valid = emails.str.fullmatch(r"[\w.+-]+@[\w-]+\.[\w.-]+", na=False)
     invalid_rows = read_csv[~is_valid]
 
     assert invalid_rows.empty, f"Found {len(invalid_rows)} invalid rows. Invalid emails: {invalid_rows['email'].tolist()}"
@@ -35,10 +35,13 @@ def test_active_players(read_csv, id, is_active):
     row = read_csv[read_csv["id"] == id]
     assert not row.empty, f"Row is empty: {row}"
 
-    assert bool(row["is_active"].iloc[0]) == is_active, f"Expected is_active = {is_active} but found {not is_active}"
+    actual = bool(row["is_active"].iloc[0])
+    assert actual == is_active, f"Expected is_active = {is_active} for id={id} but found {actual}"
 
 def test_active_player(read_csv):
-    row = read_csv[read_csv["id"] == 2]
+    id = 2
+    row = read_csv[read_csv["id"] == id]
     assert not row.empty, f"Row is empty: {row}"
 
-    assert bool(row["is_active"].iloc[0]) == True, f"Expected is_active = True but found False"
+    actual = bool(row["is_active"].iloc[0])
+    assert actual is True, f"Expected is_active = True for id={id} but found {actual}"
